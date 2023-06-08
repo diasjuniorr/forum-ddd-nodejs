@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 
 export class UniqueEntityId {
-  private readonly _value: string;
+  private _value: string;
 
   toString(): string {
     return this._value;
