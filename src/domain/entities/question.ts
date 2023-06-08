@@ -1,6 +1,7 @@
 import { Slug } from "./value-objects/slug";
 import { Entity } from "../core/entities/entity";
 import { UniqueEntityId } from "../core/entities/unique-entity-id";
+import { Optional } from "../core/types/optional";
 
 interface QuestionProps {
   authorId: UniqueEntityId;
@@ -35,5 +36,18 @@ export class Question extends Entity<QuestionProps> {
 
   get updatedAt(): Date | undefined {
     return this.props.updatedAt;
+  }
+
+  static create(
+    props: Optional<QuestionProps, "createdAt">,
+    id?: UniqueEntityId
+  ): Question {
+    return new Question(
+      {
+        ...props,
+        createdAt: new Date(),
+      },
+      id
+    );
   }
 }
