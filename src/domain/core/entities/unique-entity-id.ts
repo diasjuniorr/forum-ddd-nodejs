@@ -7,7 +7,7 @@ export class UniqueEntityId {
     return this._value;
   }
 
-  get value(): string {
+  get toValue(): string {
     return this._value;
   }
 
