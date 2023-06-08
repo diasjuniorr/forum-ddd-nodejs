@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { Slug } from "./value-objects/slug";
 import { Entity } from "../core/entities/entity";
 
