@@ -1,7 +1,7 @@
 import { test, expect } from "vitest";
 import { AnswerQuestionUseCase } from "./answer-question";
-import { Answer } from "../entities/answer";
-import { UniqueEntityId } from "../core/entities/unique-entity-id";
+import { Answer } from "../../enterprise/entities/answer";
+import { UniqueEntityId } from "../../../core/entities/unique-entity-id";
 
 const mockAnswerRepository = {
   create: async (answer: Answer) => {},
