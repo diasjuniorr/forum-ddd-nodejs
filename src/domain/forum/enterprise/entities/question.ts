@@ -3,7 +3,7 @@ import { Entity } from "../../../core/entities/entity";
 import { UniqueEntityId } from "../../../core/entities/unique-entity-id";
 import { Optional } from "../../../core/types/optional";
 
-interface QuestionProps {
+export interface QuestionProps {
   authorId: UniqueEntityId;
   bestAnswerId?: UniqueEntityId;
   title: string;
@@ -48,6 +48,7 @@ export class Question extends Entity<QuestionProps> {
 
   set title(title: string) {
     this.props.title = title;
+    this.slug = title;
     this.touch();
   }
 
@@ -56,17 +57,22 @@ export class Question extends Entity<QuestionProps> {
     this.touch();
   }
 
+  set slug(text: string) {
+    this.props.slug = Slug.createFromText(text);
+  }
+
   touch(): void {
     this.props.updatedAt = new Date();
   }
 
   static create(
-    props: Optional<QuestionProps, "createdAt">,
+    props: Optional<QuestionProps, "createdAt" | "slug">,
     id?: UniqueEntityId
   ): Question {
     return new Question(
       {
         ...props,
+        slug: props.slug ?? Slug.createFromText(props.title),
         createdAt: new Date(),
       },
       id
