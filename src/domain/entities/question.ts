@@ -38,6 +38,24 @@ export class Question extends Entity<QuestionProps> {
     return this.props.updatedAt;
   }
 
+  set bestAnswerId(id: UniqueEntityId | undefined) {
+    this.props.bestAnswerId = id;
+  }
+
+  set title(title: string) {
+    this.props.title = title;
+    this.touch();
+  }
+
+  set content(content: string) {
+    this.props.content = content;
+    this.touch();
+  }
+
+  touch(): void {
+    this.props.updatedAt = new Date();
+  }
+
   static create(
     props: Optional<QuestionProps, "createdAt">,
     id?: UniqueEntityId
