@@ -21,11 +21,13 @@ export class CreateQuestionUseCase {
     this.questionsRepository = questionsRepository;
   }
 
-  execute(
+  async execute(
     { title, content, authorId, slug }: CreateQuestionUseCaseRequest,
     id?: UniqueEntityId
-  ): CreateQuestionUseCaseResponse {
+  ): Promise<CreateQuestionUseCaseResponse> {
     const question = Question.create({ title, content, authorId, slug }, id);
+
+    await this.questionsRepository.create(question);
 
     return {
       question,

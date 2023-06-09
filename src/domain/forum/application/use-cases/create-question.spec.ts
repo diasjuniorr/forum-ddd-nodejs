@@ -1,30 +1,35 @@
-import { expect, test } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { CreateQuestionUseCase } from "./create-question";
-import { Question } from "../../enterprise/entities/question";
 import { UniqueEntityId } from "../../../core/entities/unique-entity-id";
+import { InMemoryQuestionsRepository } from "../../../../../test/repositories/in-memory-questions-repository";
 
-const mockQuestionsRepository = {
-  create: async (question: Question) => {},
-};
+let inMemoryQuestionRepository: InMemoryQuestionsRepository;
+let createQuestionUseCase: CreateQuestionUseCase;
 
-test("create a question", async () => {
-  const createQuestionUseCase = new CreateQuestionUseCase(
-    mockQuestionsRepository
-  );
-
-  const title = "New Question";
-  const content = "A random question";
-  const authorId = new UniqueEntityId();
-
-  const res = createQuestionUseCase.execute({
-    title,
-    content,
-    authorId,
+describe("create question use case", () => {
+  beforeEach(() => {
+    inMemoryQuestionRepository = new InMemoryQuestionsRepository();
+    createQuestionUseCase = new CreateQuestionUseCase(
+      inMemoryQuestionRepository
+    );
   });
 
-  expect(res.question.title).toBe(title);
-  expect(res.question.content).toBe(content);
-  expect(res.question.authorId).toBe(authorId.toString());
-  expect(res.question.slug).toBe("new-question");
-  expect(res.question.id).toBeDefined();
+  it("should create a question", async () => {
+    const title = "New Question";
+    const content = "A random question";
+    const authorId = new UniqueEntityId();
+
+    const res = await createQuestionUseCase.execute({
+      title,
+      content,
+      authorId,
+    });
+
+    expect(res.question.id).toBeDefined();
+
+    expect(res.question.title).toBe(title);
+    expect(res.question.content).toBe(content);
+    expect(res.question.authorId).toBe(authorId.toString());
+    expect(res.question.slug).toBe("new-question");
+  });
 });
