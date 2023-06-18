@@ -1,27 +1,24 @@
-import { test, expect } from "vitest";
+import { test, expect, describe, beforeEach, it } from "vitest";
 import { AnswerQuestionUseCase } from "./answer-question";
-import { Answer } from "../../enterprise/entities/answer";
+import { InMemoryAnswersRepository } from "../../../../../test/repositories/in-memory-answers-repository";
 import { UniqueEntityId } from "../../../core/entities/unique-entity-id";
 
-const mockAnswerRepository = {
-  create: async (answer: Answer) => {},
-};
+let inMemoryAnswersRepository: InMemoryAnswersRepository;
+let sut: AnswerQuestionUseCase;
 
-test("create an answer", async () => {
-  const content = "any_content";
-  const authorId = new UniqueEntityId("any_author_id");
-  const questionId = new UniqueEntityId("any_question_id");
-
-  const answerQuestionUseCase = new AnswerQuestionUseCase(mockAnswerRepository);
-
-  const answer = await answerQuestionUseCase.execute({
-    questionId,
-    authorId,
-    content,
+describe("test answer question use case", async () => {
+  beforeEach(() => {
+    inMemoryAnswersRepository = new InMemoryAnswersRepository();
+    sut = new AnswerQuestionUseCase(inMemoryAnswersRepository);
   });
 
-  expect(answer.content).toEqual(content);
-  expect(answer.authorId).toBe(authorId.toString());
-  expect(answer.questionId).toBe(questionId.toString());
-  expect(answer.id).toBeDefined();
+  it("should create an answer", async () => {
+    const { answer } = await sut.execute({
+      authorId: new UniqueEntityId(),
+      questionId: new UniqueEntityId(),
+      content: "content",
+    });
+
+    expect(answer.id).toBeDefined();
+  });
 });

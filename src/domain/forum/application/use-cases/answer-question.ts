@@ -24,6 +24,8 @@ export class AnswerQuestionUseCase {
 
     await this.answerRepository.create(answer);
 
-    return answer;
+    return {
+      answer,
+    };
   }
 }

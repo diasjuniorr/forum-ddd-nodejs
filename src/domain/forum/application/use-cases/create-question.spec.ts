@@ -4,14 +4,12 @@ import { UniqueEntityId } from "../../../core/entities/unique-entity-id";
 import { InMemoryQuestionsRepository } from "../../../../../test/repositories/in-memory-questions-repository";
 
 let inMemoryQuestionRepository: InMemoryQuestionsRepository;
-let createQuestionUseCase: CreateQuestionUseCase;
+let sut: CreateQuestionUseCase;
 
 describe("create question use case", () => {
   beforeEach(() => {
     inMemoryQuestionRepository = new InMemoryQuestionsRepository();
-    createQuestionUseCase = new CreateQuestionUseCase(
-      inMemoryQuestionRepository
-    );
+    sut = new CreateQuestionUseCase(inMemoryQuestionRepository);
   });
 
   it("should create a question", async () => {
@@ -19,7 +17,7 @@ describe("create question use case", () => {
     const content = "A random question";
     const authorId = new UniqueEntityId();
 
-    const res = await createQuestionUseCase.execute({
+    const res = await sut.execute({
       title,
       content,
       authorId,
