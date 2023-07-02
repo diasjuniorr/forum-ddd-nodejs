@@ -1,8 +1,9 @@
+import { UniqueEntityId } from "../../src/domain/core/entities/unique-entity-id";
 import { QuestionsRepository } from "../../src/domain/forum/application/repositories/questions-repository";
 import { Question } from "../../src/domain/forum/enterprise/entities/question";
 
 export class InMemoryQuestionsRepository implements QuestionsRepository {
-  items: Question[] = [];
+  public items: Question[] = [];
 
   async create(question: Question) {
     this.items.push(question);
@@ -15,5 +16,19 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     if (!question) return null;
 
     return question;
+  }
+
+  async getById(id: string): Promise<Question | null> {
+    const question = this.items.find(
+      (question) => question.id.toString() === id
+    );
+
+    if (!question) throw new Error("no question found");
+
+    return question;
+  }
+
+  async delete(question: Question): Promise<void> {
+    this.items = this.items.filter((item) => item.id != question.id);
   }
 }
