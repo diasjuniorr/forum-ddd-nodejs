@@ -3,10 +3,13 @@ import { AnswersRepository } from "../repositories/answers-repository";
 import { DeleteAnswerUseCase } from "./delete-answer";
 import { InMemoryAnswersRepository } from "../../../../../test/repositories/in-memory-answers-repository";
 import { makeAnswer } from "../../../../../test/factories/make-answer";
+import { UniqueEntityId } from "../../../core/entities/unique-entity-id";
 
 let inMemoryAnswersRepository: AnswersRepository;
 let sut: DeleteAnswerUseCase;
-let answer = makeAnswer();
+
+let authorId = new UniqueEntityId();
+let answer = makeAnswer({ authorId });
 
 describe("delete answer", () => {
   beforeEach(() => {
@@ -17,14 +20,23 @@ describe("delete answer", () => {
   });
 
   it("should delete an answer", async () => {
-    await sut.execute({ id: answer.id.toString() });
+    await sut.execute({
+      id: answer.id.toString(),
+      authorId: authorId.toString(),
+    });
 
     expect(sut.answersRepository.items.length).toEqual(0);
   });
 
-  it("should throw an error", async () => {
+  it("should throw an error when answer does not exist", async () => {
     expect(async () => {
-      await sut.execute({ id: "1" });
+      await sut.execute({ id: "1", authorId: authorId.toString() });
+    }).rejects.toBeInstanceOf(Error);
+  });
+
+  it("should throw an error when author is not allowed", async () => {
+    expect(async () => {
+      await sut.execute({ id: answer.id.toString(), authorId: "1" });
     }).rejects.toBeInstanceOf(Error);
   });
 });
