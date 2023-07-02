@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { UniqueEntityId } from "../../src/domain/core/entities/unique-entity-id";
 import {
   Question,
@@ -6,8 +7,8 @@ import {
 
 export const makeQuestion = (overrride?: Partial<QuestionProps>): Question => {
   return Question.create({
-    title: "title",
-    content: "Content",
+    title: faker.lorem.sentence(),
+    content: faker.lorem.text(),
     authorId: new UniqueEntityId(),
     ...overrride,
   });
