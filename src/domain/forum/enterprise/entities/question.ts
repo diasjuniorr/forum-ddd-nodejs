@@ -13,6 +13,11 @@ export interface QuestionProps {
   updatedAt?: Date;
 }
 
+export interface UpdateQuestionProps {
+  title?: string;
+  content?: string;
+}
+
 export class Question extends Entity<QuestionProps> {
   get title(): string {
     return this.props.title;

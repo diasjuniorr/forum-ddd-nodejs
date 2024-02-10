@@ -2,8 +2,6 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { QuestionsRepository } from "../repositories/questions-repository";
 import { GetQuestionBySlugUseCase } from "./get-question-by-slug";
 import { InMemoryQuestionsRepository } from "../../../../../test/repositories/in-memory-questions-repository";
-import { Question } from "../../enterprise/entities/question";
-import { UniqueEntityId } from "../../../core/entities/unique-entity-id";
 import { makeQuestion } from "../../../../../test/factories/make-question";
 
 let inMemoryQuestionRepository: QuestionsRepository;

@@ -6,4 +6,5 @@ export interface QuestionsRepository {
   getBySlug(slug: string): Promise<Question | null>;
   getById(id: string): Promise<Question | null>;
   delete(question: Question): Promise<void>;
+  update(question: Question): Promise<Question | null>;
 }
