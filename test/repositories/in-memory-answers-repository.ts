@@ -22,4 +22,14 @@ export class InMemoryAnswersRepository implements AnswersRepository {
       (item) => item.id.toString() != answer.id.toString()
     );
   }
+
+  async update(answer: Answer): Promise<Answer | null> {
+    const answerIdx = this.items.findIndex((item) => item.id === answer.id);
+
+    if (answerIdx < 0) return null;
+
+    this.items[answerIdx] = answer;
+
+    return answer;
+  }
 }
