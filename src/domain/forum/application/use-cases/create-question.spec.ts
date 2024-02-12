@@ -27,7 +27,7 @@ describe("create question use case", () => {
 
     expect(res.question.title).toBe(title);
     expect(res.question.content).toBe(content);
-    expect(res.question.authorId).toBe(authorId.toString());
+    expect(res.question.authorId).toBe(authorId);
     expect(res.question.slug).toBe("new-question");
   });
 });

@@ -27,8 +27,8 @@ export class Question extends Entity<QuestionProps> {
     return this.props.content;
   }
 
-  get authorId(): string {
-    return this.props.authorId.toString();
+  get authorId(): UniqueEntityId {
+    return this.props.authorId;
   }
 
   get slug(): string {

@@ -13,6 +13,7 @@ let questionsRepository: QuestionsRepository;
 let sut: SaveBestAnswerUseCase;
 
 let questionId: UniqueEntityId;
+let authorId: UniqueEntityId;
 let bestAnswerId: UniqueEntityId;
 
 describe("save best answer use case", () => {
@@ -22,6 +23,7 @@ describe("save best answer use case", () => {
 
     const question = makeQuestion();
     questionId = question.id;
+    authorId = question.authorId;
 
     await questionsRepository.create(question);
 
@@ -30,7 +32,7 @@ describe("save best answer use case", () => {
     await answersRepository.create(answer);
 
     sut = new SaveBestAnswerUseCase(questionsRepository, answersRepository);
-    await sut.execute({ questionId, answerId: bestAnswerId });
+    await sut.execute({ questionId, authorId, answerId: bestAnswerId });
   });
 
   it("should save the best answer to a question", async () => {

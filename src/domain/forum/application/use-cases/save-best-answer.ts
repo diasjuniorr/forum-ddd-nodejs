@@ -5,6 +5,7 @@ import { QuestionsRepository } from "../repositories/questions-repository";
 interface SaveBestAnswerUseCaseRequest {
   answerId: UniqueEntityId;
   questionId: UniqueEntityId;
+  authorId: UniqueEntityId;
 }
 
 export class SaveBestAnswerUseCase {
@@ -19,11 +20,17 @@ export class SaveBestAnswerUseCase {
     this.answersRepository = answersRepository;
   }
 
-  async execute({ answerId, questionId }: SaveBestAnswerUseCaseRequest) {
+  async execute({
+    answerId,
+    questionId,
+    authorId,
+  }: SaveBestAnswerUseCaseRequest) {
     const question = await this.questionsRepository.getById(
       questionId.toString()
     );
     if (!question) throw Error("question not found");
+
+    if (authorId !== question.authorId) throw new Error("not allowed");
 
     const answer = await this.answersRepository.getById(answerId.toString());
     if (!answer) throw new Error("answer not found");
