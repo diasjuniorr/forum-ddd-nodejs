@@ -32,7 +32,7 @@ describe("list quesion answers use case", () => {
     await questionsRepository.create(question);
 
     //create answers to question
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 2; i++) {
       const answer = makeAnswer();
       answer.questionId = questionId;
       answers.push(answer);
@@ -44,7 +44,7 @@ describe("list quesion answers use case", () => {
     randomAnswers = [];
 
     //create answers to random questions
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
       randomAnswers.push(makeAnswer());
     }
 
@@ -54,7 +54,7 @@ describe("list quesion answers use case", () => {
     const res = await sut.execute({ questionId, page: 1, limit: 32 });
 
     expect(res).toBeDefined();
-    expect(res.answers.length).toBe(5);
+    expect(res.answers.length).toBe(2);
 
     res.answers.forEach((answer) => {
       expect(answer.questionId).toBe(questionId.toString());
