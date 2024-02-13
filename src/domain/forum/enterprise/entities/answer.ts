@@ -40,6 +40,10 @@ export class Answer extends Entity<AnswerProps> {
     this.touch();
   }
 
+  set questionId(questionId: UniqueEntityId) {
+    this.props.questionId = questionId;
+  }
+
   touch(): void {
     this.props.updatedAt = new Date();
   }
