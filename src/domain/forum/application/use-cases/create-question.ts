@@ -1,4 +1,5 @@
 import { UniqueEntityId } from "../../../core/entities/unique-entity-id";
+import { Either, right } from "../../../core/types/either";
 import { Question, QuestionProps } from "../../enterprise/entities/question";
 import { Slug } from "../../enterprise/entities/value-objects/slug";
 import { QuestionsRepository } from "../repositories/questions-repository";
@@ -10,9 +11,7 @@ interface CreateQuestionUseCaseRequest {
   slug?: Slug;
 }
 
-interface CreateQuestionUseCaseResponse {
-  question: Question;
-}
+type CreateQuestionUseCaseResponse = Either<{}, { question: Question }>;
 
 export class CreateQuestionUseCase {
   public questionsRepository: QuestionsRepository;
@@ -29,8 +28,6 @@ export class CreateQuestionUseCase {
 
     await this.questionsRepository.create(question);
 
-    return {
-      question,
-    };
+    return right({ question });
   }
 }
