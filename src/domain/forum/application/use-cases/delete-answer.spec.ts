@@ -30,13 +30,20 @@ describe("delete answer", () => {
 
   it("should throw an error when answer does not exist", async () => {
     expect(async () => {
-      await sut.execute({ id: "1", authorId: authorId.toString() });
-    }).rejects.toBeInstanceOf(Error);
+      const res = await sut.execute({ id: "1", authorId: authorId.toString() });
+
+      expect(res.isLeft()).toBeTruthy();
+    });
   });
 
   it("should throw an error when author is not allowed", async () => {
     expect(async () => {
-      await sut.execute({ id: answer.id.toString(), authorId: "1" });
-    }).rejects.toBeInstanceOf(Error);
+      const res = await sut.execute({
+        id: answer.id.toString(),
+        authorId: "1",
+      });
+
+      expect(res.isLeft()).toBeTruthy();
+    });
   });
 });
