@@ -20,7 +20,8 @@ describe("create question use case", () => {
     const res = await sut.execute({
       title,
       content,
-      authorId,
+      authorId: authorId.toString(),
+      attachmentIds: [],
     });
 
     expect(res.isRight()).toBe(true);
