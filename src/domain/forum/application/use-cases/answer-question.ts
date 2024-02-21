@@ -9,7 +9,7 @@ interface AnswerQuestionUseCaseRequest {
   content: string;
 }
 
-type AnswerQuestinUseCaseResponse = Either<{}, { answer: Answer }>;
+type AnswerQuestinUseCaseResponse = Either<null, { answer: Answer }>;
 
 export class AnswerQuestionUseCase {
   public answerRepository: AnswersRepository;

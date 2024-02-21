@@ -26,12 +26,13 @@ describe("delete by slug use case", () => {
   it("should delete a question", async () => {
     const res = await sut.execute({ question, authorId: authorId.toString() });
 
+    expect(res.isRight()).toBe(true);
     expect(inMemoryQuestionsRepository.items).toHaveLength(0);
   });
 
   it("should not allow question deletion by another author", async () => {
-    expect(() => {
-      return sut.execute({ question, authorId: "invalid-id" });
-    }).rejects.toBeInstanceOf(Error);
+    const res = await sut.execute({ question, authorId: "invalid-id" });
+
+    expect(res.isLeft()).toBe(true);
   });
 });

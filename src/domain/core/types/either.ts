@@ -4,7 +4,11 @@
  */
 export class Left<L, R> {
   readonly _tag = "Left";
-  constructor(readonly left: L) {}
+  readonly value: L;
+
+  constructor(readonly left: L) {
+    this.value = left;
+  }
 
   isRight(): this is Right<L, R> {
     return false;
@@ -21,7 +25,10 @@ export class Left<L, R> {
  */
 export class Right<L, R> {
   readonly _tag = "Right";
-  constructor(readonly right: R) {}
+  readonly value: R;
+  constructor(readonly right: R) {
+    this.value = right;
+  }
 
   isRight(): this is Right<L, R> {
     return true;

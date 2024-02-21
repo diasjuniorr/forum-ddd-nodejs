@@ -11,7 +11,7 @@ interface CreateQuestionUseCaseRequest {
   slug?: Slug;
 }
 
-type CreateQuestionUseCaseResponse = Either<{}, { question: Question }>;
+type CreateQuestionUseCaseResponse = Either<null, { question: Question }>;
 
 export class CreateQuestionUseCase {
   public questionsRepository: QuestionsRepository;

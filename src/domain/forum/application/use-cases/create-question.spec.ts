@@ -23,11 +23,12 @@ describe("create question use case", () => {
       authorId,
     });
 
-    expect(res.question.id).toBeDefined();
+    expect(res.isRight()).toBe(true);
+    expect(res.value?.question.id).toBeDefined();
 
-    expect(res.question.title).toBe(title);
-    expect(res.question.content).toBe(content);
-    expect(res.question.authorId).toBe(authorId);
-    expect(res.question.slug).toBe("new-question");
+    expect(res.value?.question.title).toBe(title);
+    expect(res.value?.question.content).toBe(content);
+    expect(res.value?.question.authorId).toBe(authorId);
+    expect(res.value?.question.slug).toBe("new-question");
   });
 });

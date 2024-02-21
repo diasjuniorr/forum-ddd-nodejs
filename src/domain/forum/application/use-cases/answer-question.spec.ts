@@ -13,12 +13,14 @@ describe("test answer question use case", async () => {
   });
 
   it("should create an answer", async () => {
-    const { answer } = await sut.execute({
+    const res = await sut.execute({
       authorId: new UniqueEntityId(),
       questionId: new UniqueEntityId(),
       content: "content",
     });
 
-    expect(answer.id).toBeDefined();
+    expect(res.isRight()).toBe(true);
+
+    expect(res.value?.answer).toBeDefined();
   });
 });
