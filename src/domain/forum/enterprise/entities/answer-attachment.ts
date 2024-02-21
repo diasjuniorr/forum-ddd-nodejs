@@ -2,20 +2,20 @@ import { Entity } from "../../../core/entities/entity";
 import { UniqueEntityId } from "../../../core/entities/unique-entity-id";
 
 export interface AnswerAttachmentProps {
-  questionId: UniqueEntityId;
+  attachmentId: UniqueEntityId;
   answerId: UniqueEntityId;
 }
 
 export class AnswerAttachment extends Entity<AnswerAttachmentProps> {
-  get questionId() {
-    return this.props.questionId;
+  get attachmentId(): UniqueEntityId {
+    return this.props.attachmentId;
   }
 
-  get answerId() {
+  get answerId(): UniqueEntityId {
     return this.props.answerId;
   }
 
-  static create(props: AnswerAttachmentProps, id: UniqueEntityId) {
+  static create(props: AnswerAttachmentProps, id?: UniqueEntityId) {
     return new AnswerAttachment(props, id);
   }
 }
