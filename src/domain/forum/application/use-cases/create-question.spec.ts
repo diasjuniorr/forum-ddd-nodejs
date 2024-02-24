@@ -47,14 +47,21 @@ describe("create question use case", () => {
 
     expect(res.isRight()).toBe(true);
     expect(inMemoryQuestionRepository.items.length).toBe(1);
-    expect(inMemoryQuestionRepository.items[0].attachments.length).toBe(2);
 
     expect(
-      inMemoryQuestionRepository.items[0].attachments[0].attachmentId.toString()
+      inMemoryQuestionRepository.items[0].attachments.getItems()
+    ).toHaveLength(2);
+
+    expect(
+      inMemoryQuestionRepository.items[0].attachments
+        .getItems()[0]
+        .attachmentId.toString()
     ).toBe("1");
 
     expect(
-      inMemoryQuestionRepository.items[0].attachments[1].attachmentId.toString()
+      inMemoryQuestionRepository.items[0].attachments
+        .getItems()[1]
+        .attachmentId.toString()
     ).toBe("2");
   });
 });

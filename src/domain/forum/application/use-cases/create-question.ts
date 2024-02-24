@@ -1,7 +1,8 @@
 import { UniqueEntityId } from "../../../core/entities/unique-entity-id";
 import { Either, right } from "../../../core/types/either";
-import { Question, QuestionProps } from "../../enterprise/entities/question";
+import { Question } from "../../enterprise/entities/question";
 import { QuestionAttachment } from "../../enterprise/entities/question-attachment";
+import { QuestionAttachmentList } from "../../enterprise/entities/question-attachment-list";
 import { Slug } from "../../enterprise/entities/value-objects/slug";
 import { QuestionsRepository } from "../repositories/questions-repository";
 
@@ -45,7 +46,7 @@ export class CreateQuestionUseCase {
       });
     });
 
-    question.attachments = attachments;
+    question.attachments = new QuestionAttachmentList(attachments);
 
     await this.questionsRepository.create(question);
 

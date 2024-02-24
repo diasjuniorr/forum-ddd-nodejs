@@ -1,4 +1,3 @@
-import { UniqueEntityId } from "../../src/domain/core/entities/unique-entity-id";
 import { PaginationParam } from "../../src/domain/core/repositories/pagination-params";
 import { QuestionsRepository } from "../../src/domain/forum/application/repositories/questions-repository";
 import { Question } from "../../src/domain/forum/enterprise/entities/question";
