@@ -33,7 +33,11 @@ describe("edit question use case", () => {
       content: newContent,
     });
 
-    expect(res.question.content).toBe(newContent);
-    expect(res.question.title).toBe(newTitle);
+    expect(res.isRight()).toBe(true);
+
+    if (res.isRight()) {
+      expect(res.value.question.content).toBe(newContent);
+      expect(res.value.question.title).toBe(newTitle);
+    }
   });
 });

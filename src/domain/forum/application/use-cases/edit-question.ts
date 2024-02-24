@@ -1,5 +1,8 @@
+import { Either, left, right } from "../../../core/types/either";
 import { Question } from "../../enterprise/entities/question";
 import { QuestionsRepository } from "../repositories/questions-repository";
+import { OperationNotAllowedError } from "./errors/operation-not-allowed-error";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface EditQuestionUseCaseRequest {
   questionId: string;
@@ -8,9 +11,10 @@ interface EditQuestionUseCaseRequest {
   content: string;
 }
 
-interface EditQuestionUseCaseResponse {
-  question: Question;
-}
+type EditQuestionUseCaseResponse = Either<
+  ResourceNotFoundError | OperationNotAllowedError,
+  { question: Question }
+>;
 
 export class EditQuestionUseCase {
   public questionRepository: QuestionsRepository;
@@ -27,17 +31,23 @@ export class EditQuestionUseCase {
   }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
     const question = await this.questionRepository.getById(questionId);
 
-    if (!question) throw new Error("question not found");
+    if (!question) {
+      return left(new ResourceNotFoundError("question"));
+    }
 
-    if (question.authorId != authorId) throw new Error("not allowed");
+    if (question.authorId.toString() != authorId) {
+      return left(new OperationNotAllowedError("question"));
+    }
 
     question.title = title;
     question.content = content;
 
     const res = await this.questionRepository.update(question);
 
-    if (!res) throw new Error("question not found");
+    if (!res) {
+      return left(new ResourceNotFoundError("question"));
+    }
 
-    return { question };
+    return right({ question });
   }
 }
